@@ -5,21 +5,21 @@
 class FnSwitcher < Formula
   desc "Instantly switches keyboard layout when you press the Fn (Globe) key — without the annoying macOS popup."
   homepage "https://github.com/imetlenko/fn-switcher"
-  version "0.2.0"
+  version "0.2.1"
   license "MIT"
   depends_on :macos
 
   if Hardware::CPU.intel?
-    url "https://github.com/imetlenko/fn-switcher/releases/download/v0.2.0/fn-switcher_0.2.0_darwin_amd64.tar.gz"
-    sha256 "22408831be3078237d0c8a4c686e4cd4b63a2517d66f131eab6fb216728db8cd"
+    url "https://github.com/imetlenko/fn-switcher/releases/download/v0.2.1/fn-switcher_0.2.1_darwin_amd64.tar.gz"
+    sha256 "1db5473bf334def7c89b3d57b706058d8c84ccf5b653e43d9ec3a3e539023f14"
 
     def install
       bin.install "fn-switcher"
     end
   end
   if Hardware::CPU.arm?
-    url "https://github.com/imetlenko/fn-switcher/releases/download/v0.2.0/fn-switcher_0.2.0_darwin_arm64.tar.gz"
-    sha256 "9e2663cf1af7e1e7600769d1cc1e4ea69a700b19b70fcb5c81cd49c7380dd23e"
+    url "https://github.com/imetlenko/fn-switcher/releases/download/v0.2.1/fn-switcher_0.2.1_darwin_arm64.tar.gz"
+    sha256 "8f219fb8a5e720c73405665f935962fc82b07addbdf9d382d5908fae550252f0"
 
     def install
       bin.install "fn-switcher"
