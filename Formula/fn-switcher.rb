@@ -5,47 +5,97 @@
 class FnSwitcher < Formula
   desc "Instantly switches keyboard layout when you press the Fn (Globe) key — without the annoying macOS popup."
   homepage "https://github.com/imetlenko/fn-switcher"
-  version "0.2.1"
+  version "0.3.0"
   license "MIT"
   depends_on :macos
 
   if Hardware::CPU.intel?
-    url "https://github.com/imetlenko/fn-switcher/releases/download/v0.2.1/fn-switcher_0.2.1_darwin_amd64.tar.gz"
-    sha256 "1db5473bf334def7c89b3d57b706058d8c84ccf5b653e43d9ec3a3e539023f14"
+    url "https://github.com/metlenko/fn-switcher/releases/download/v0.3.0/fn-switcher_0.3.0_darwin_amd64.tar.gz"
+    sha256 "bab4a03f49b69a2b5286cbff461fb48770bf5b827a434feaf8e45dc1c8706173"
 
-    def install
-      bin.install "fn-switcher"
+    define_method(:install) do
+      app_macos = prefix/"FnSwitcher.app/Contents/MacOS"
+      app_macos.mkpath
+      app_macos.install "fn-switcher"
+      (prefix/"FnSwitcher.app/Contents/Info.plist").write <<~PLIST
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+        <plist version="1.0">
+        <dict>
+          <key>CFBundleIdentifier</key>
+          <string>com.user.fnswitcher</string>
+          <key>CFBundleName</key>
+          <string>FnSwitcher</string>
+          <key>CFBundleDisplayName</key>
+          <string>Fn Switcher</string>
+          <key>CFBundleExecutable</key>
+          <string>fn-switcher</string>
+          <key>CFBundlePackageType</key>
+          <string>APPL</string>
+          <key>CFBundleVersion</key>
+          <string>#{version}</string>
+          <key>LSUIElement</key>
+          <true/>
+        </dict>
+        </plist>
+      PLIST
+      bin.install_symlink prefix/"FnSwitcher.app/Contents/MacOS/fn-switcher"
     end
   end
   if Hardware::CPU.arm?
-    url "https://github.com/imetlenko/fn-switcher/releases/download/v0.2.1/fn-switcher_0.2.1_darwin_arm64.tar.gz"
-    sha256 "8f219fb8a5e720c73405665f935962fc82b07addbdf9d382d5908fae550252f0"
+    url "https://github.com/metlenko/fn-switcher/releases/download/v0.3.0/fn-switcher_0.3.0_darwin_arm64.tar.gz"
+    sha256 "181d452550880092c277cf179c0e4ae5df1fc4bd7add445f32400150969e083d"
 
-    def install
-      bin.install "fn-switcher"
+    define_method(:install) do
+      app_macos = prefix/"FnSwitcher.app/Contents/MacOS"
+      app_macos.mkpath
+      app_macos.install "fn-switcher"
+      (prefix/"FnSwitcher.app/Contents/Info.plist").write <<~PLIST
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+        <plist version="1.0">
+        <dict>
+          <key>CFBundleIdentifier</key>
+          <string>com.user.fnswitcher</string>
+          <key>CFBundleName</key>
+          <string>FnSwitcher</string>
+          <key>CFBundleDisplayName</key>
+          <string>Fn Switcher</string>
+          <key>CFBundleExecutable</key>
+          <string>fn-switcher</string>
+          <key>CFBundlePackageType</key>
+          <string>APPL</string>
+          <key>CFBundleVersion</key>
+          <string>#{version}</string>
+          <key>LSUIElement</key>
+          <true/>
+        </dict>
+        </plist>
+      PLIST
+      bin.install_symlink prefix/"FnSwitcher.app/Contents/MacOS/fn-switcher"
     end
   end
 
   def caveats
     <<~EOS
       After installing, remove the quarantine attribute:
-        sudo xattr -dr com.apple.quarantine #{opt_bin}/fn-switcher
+        sudo xattr -dr com.apple.quarantine #{opt_prefix}/FnSwitcher.app
 
       fn-switcher requires Accessibility permissions:
         System Settings → Privacy & Security → Accessibility
-        Add: #{opt_bin}/fn-switcher
+        Add: #{opt_prefix}/FnSwitcher.app
 
       To start fn-switcher now and on login:
         brew services start fn-switcher
 
       To configure layouts and mode, create a config file:
         mkdir -p ~/.config/fn-switcher
-        echo '{"layouts": ["ABC", "Russian"], "cycle": true}' > ~/.config/fn-switcher/config.json
+        echo '{"layouts": ["ABC", "Russian"]}' > ~/.config/fn-switcher/config.json
     EOS
   end
 
   service do
-    run [opt_bin/"fn-switcher"]
+    run [opt_prefix/"FnSwitcher.app/Contents/MacOS/fn-switcher"]
     keep_alive true
     log_path var/"log/fn-switcher.log"
     error_log_path var/"log/fn-switcher.error.log"
