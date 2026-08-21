@@ -11,7 +11,7 @@ class FnSwitcher < Formula
 
   if Hardware::CPU.intel?
     url "https://github.com/metlenko/fn-switcher/releases/download/v0.3.0/fn-switcher_0.3.0_darwin_amd64.tar.gz"
-    sha256 "bab4a03f49b69a2b5286cbff461fb48770bf5b827a434feaf8e45dc1c8706173"
+    sha256 "0c2d6833c01dcdaf6e257138ddc3ee573c64059b92ea2920409e392d4056b863"
 
     define_method(:install) do
       app_macos = prefix/"FnSwitcher.app/Contents/MacOS"
@@ -44,7 +44,7 @@ class FnSwitcher < Formula
   end
   if Hardware::CPU.arm?
     url "https://github.com/metlenko/fn-switcher/releases/download/v0.3.0/fn-switcher_0.3.0_darwin_arm64.tar.gz"
-    sha256 "181d452550880092c277cf179c0e4ae5df1fc4bd7add445f32400150969e083d"
+    sha256 "4e621801516284f487389713acd5d5634df0f5be36d1d1563d03468eadcbf1d0"
 
     define_method(:install) do
       app_macos = prefix/"FnSwitcher.app/Contents/MacOS"
